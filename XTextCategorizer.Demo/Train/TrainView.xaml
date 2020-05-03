@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="XTextCategorizer.Demo.Train.TrainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:train="clr-namespace:XTextCategorizer.Demo.Train"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=train:TrainViewModel, IsDesignTimeCreatable=False}"
+             d:DesignHeight="600" 
+             d:DesignWidth="960">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Components/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UniformGrid Rows="1">
+        <DockPanel Style="{StaticResource CommonStyle}">
+            <TextBlock Style="{StaticResource TextBlockHeader2Style}"
+                       DockPanel.Dock="Top">
+                Positive samples
+            </TextBlock>
+            <TextBox Style="{StaticResource TextAreaStyle}" 
+                     Text="{Binding PositiveSamples, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+        <DockPanel Style="{StaticResource CommonStyle}">
+            <TextBlock Style="{StaticResource TextBlockHeader2Style}"
+                       DockPanel.Dock="Top">
+                Negative samples
+            </TextBlock>
+            <TextBox Style="{StaticResource TextAreaStyle}" 
+                     Text="{Binding NegativeSamples, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+        <StackPanel Style="{StaticResource CommonStyle}">
+            <TextBlock Style="{StaticResource TextBlockHeader2Style}">
+                Settings
+            </TextBlock>
+            <DockPanel Style="{StaticResource CommonStyle}">
+                <TextBlock Style="{StaticResource TextBlockParagraphStyle}"
+                           DockPanel.Dock="Left">
+                    Favors speed
+                </TextBlock>
+                <TextBlock Style="{StaticResource TextBlockParagraphStyle}"
+                           DockPanel.Dock="Right">
+                    Favors accuracy
+                </TextBlock>
+
+                <Slider Style="{StaticResource CommonStyle}"
+                        Value="{Binding ModelSize}"
+                        Minimum="0"
+                        Maximum="1"
+                        IsSnapToTickEnabled="False"/>
+            </DockPanel>
+            <TextBlock Style="{StaticResource TextBlockHeader2Style}">
+                Actions
+            </TextBlock>
+            <Button HorizontalAlignment="Left"
+                    Command="{Binding LoadExampleCommand}"
+                    Style="{StaticResource ButtonStyle}">
+                Load Example Data
+            </Button>
+            <TextBlock Style="{StaticResource TextBlockParagraphStyle}">
+                Load Example Data: This action will load some example positive and negative samples
+            </TextBlock>
+            <DockPanel>
+                <Button HorizontalAlignment="Left"
+                        Command="{Binding TrainCommand}"
+                        DockPanel.Dock="Left"
+                        Style="{StaticResource ButtonStyle}">
+                    Train Text Categorizer
+                </Button>
+
+                <TextBlock Text="{Binding TrainProgressPercentage}"
+                           Style="{StaticResource TextBlockParagraphStyle}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Right">
+                </TextBlock>
+
+            </DockPanel>
+            
+            <TextBlock Style="{StaticResource TextBlockParagraphStyle}">
+                Train Text Categorizer: This action will train the text categorizer, using the positive and negative examples
+            </TextBlock>
+            <Button HorizontalAlignment="Left"
+                    Command="{Binding SaveCommand}"
+                    Style="{StaticResource ButtonStyle}">
+                Save Text Categorizer As
+            </Button>
+            <TextBlock Style="{StaticResource TextBlockParagraphStyle}">
+                Save Text Categorizer As: This action will open a save file dialog, allow you to save the trained text categorizer to disk
+            </TextBlock>
+        </StackPanel>
+    </UniformGrid>
+</UserControl>
